@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/number1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="첫번째숫자"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="87dp" />
+    <EditText
+        android:id="@+id/number2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="두번째숫자"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="133dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/addbutton"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:onClick="addClick"
+            android:text="+"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="205dp"
+            tools:layout_marginLeft="10dp" />
+
+        <Button
+            android:id="@+id/subtract"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:onClick="subClick"
+            android:text="-"
+            tools:layout_editor_absoluteX="104dp"
+            tools:layout_editor_absoluteY="205dp"
+            tools:layout_marginLeft="10dp"/>
+
+        <Button
+            android:id="@+id/multibutton"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:onClick="multiClick"
+            android:text="*"
+            tools:layout_editor_absoluteX="192dp"
+            tools:layout_editor_absoluteY="205dp"
+            tools:layout_marginLeft="10dp"/>
+
+
+        <Button
+            android:id="@+id/divbutton"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:onClick="divClick"
+            android:text="/"
+            tools:layout_editor_absoluteX="278dp"
+            tools:layout_editor_absoluteY="205dp"
+            tools:layout_marginLeft="10dp"/>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="253dp"
+        android:hint="result"
+        />
+
+
+</LinearLayout>
