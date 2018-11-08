@@ -1,11 +1,16 @@
 package com.example.ns.dialogtest;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,5 +45,106 @@ public class MainActivity extends AppCompatActivity {
                         .show();
             }
         });
+
+        //프레그먼트를이용한 dialog생성하기
+        Button btNoticeDialog = findViewById(R.id.btNoticefg);
+        btNoticeDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment noticedialogfrag = new NoticeDialogFragment();
+                noticedialogfrag.setCancelable(false);
+                noticedialogfrag.show(getSupportFragmentManager(), "noticedialogfrag");  //스트링은 그냥 관리하기위한이름임 아무거나해도상관없음
+
+            }
+        });
+
+
+        //리스트버튼
+
+        Button btlistdialog = findViewById(R.id.btlistdialog);
+        btlistdialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment listdialog = new ListDialogFragment();
+                listdialog.setCancelable(false);
+                listdialog.show(getSupportFragmentManager(), "listdialogfrag");  //스트링은 그냥 관리하기위한이름임 아무거나해도상관없음
+
+            }
+        });
+
+
     }
+
+    //프레그먼트dialog클래스생성
+    public static class NoticeDialogFragment extends DialogFragment{
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+            AlertDialog.Builder adBuilder = new AlertDialog.Builder(getActivity());
+            adBuilder.setMessage("Time out!!")
+            .setTitle("Notice")
+            .setIcon(R.mipmap.ic_launcher)
+            .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            })
+                    .setCancelable(false);  //만드는곳이지 관리하진않음 -> fragment의 컨테이너에서 할거냐말거냐해야함
+            return adBuilder.create();
+         //   return super.onCreateDialog(savedInstanceState);
+        }
+    }
+
+
+    //list dialog
+    public static class ListDialogFragment extends DialogFragment{
+        final CharSequence[] items = {"Red", "Green", "Blue"};
+        boolean[] checkitem =  {false,true,false}; //checkboxlist의 초기값을위한 저장 item수와같아야함
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+            AlertDialog.Builder adBuilder = new AlertDialog.Builder(getActivity());
+            //adBuilder.setMessage("Time out!!")
+            adBuilder.setTitle("list")   //버튼영역 컨텐트영역 타이틀영역으로 되어있음 아이템을 추가하면 컨텐츠영역의 메시지와 겹침 ->아이템안뜸
+            .setIcon(R.mipmap.ic_launcher)
+            /*.setItems(items, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) { //whitch가 리스트의 뭐가눌렷는지반환해주는것
+                    Toast.makeText(getActivity(), items[which], Toast.LENGTH_SHORT).show();
+                }
+            })*/
+
+            /*  라디오버튼
+            .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getActivity(), items[which], Toast.LENGTH_SHORT).show();
+                }
+            })*/
+
+            .setMultiChoiceItems(items, checkitem, new DialogInterface.OnMultiChoiceClickListener() {  //여러개를 고를수있기떄문에 핸들러가다르다
+                @Override
+                public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                    String str = (isChecked)? "check!" : "uncheck!";
+                    Toast.makeText(getActivity(), items[which]+str, Toast.LENGTH_SHORT).show();
+
+                }
+            })
+            .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            })
+            .setCancelable(false);  //만드는곳이지 관리하진않음 -> fragment의 컨테이너에서 할거냐말거냐해야함
+            return adBuilder.create();
+
+           // return super.onCreateDialog(savedInstanceState);
+        }
+    }
+
+
+
 }
