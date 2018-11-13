@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        final DialogFragment listdialog = new ListDialogFragment();  //버튼을 누를때마다가아닌 한번만 생성하는게 좋을거같음!
         //리스트버튼
 
         Button btlistdialog = findViewById(R.id.btlistdialog);
@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                DialogFragment listdialog = new ListDialogFragment();
                 listdialog.setCancelable(false);
                 listdialog.show(getSupportFragmentManager(), "listdialogfrag");  //스트링은 그냥 관리하기위한이름임 아무거나해도상관없음
 

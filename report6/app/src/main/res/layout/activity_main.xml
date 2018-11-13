@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+  >
+
+
+
+    <Button
+        android:id="@+id/btexit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="Exit"
+       />
+
+    <Button
+        android:id="@+id/btset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/btexit"
+        android:text="Set"
+        android:layout_marginRight="20dp"
+        android:textAllCaps="false"
+        />
+
+    <Button
+        android:id="@+id/btColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btset"
+        android:layout_alignLeft="@id/btset"
+        android:text = "Color Set"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:textAllCaps="false"
+        />
+
+    <Button
+        android:id="@+id/btvegetable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btColor"
+        android:layout_alignLeft="@id/btColor"
+        android:text = "편식"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:textAllCaps="false"
+        />
+
+</RelativeLayout>
