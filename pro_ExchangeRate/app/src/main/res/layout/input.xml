@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/tvex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="예시:식사, 술"
+        android:textColor="#dddddd"
+        android:layout_above="@+id/et_input_category"
+        android:layout_alignLeft="@id/et_input_category"/>
+
+    <Spinner
+        android:id="@+id/spinner_input_exchange"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/tv_input_exchange"
+        android:layout_alignLeft="@+id/et_input_money"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/et_input_money"
+        android:layout_alignBottom="@id/tv_input_exchange"
+        android:entries="@array/spinner"
+        />
+
+    <Button
+        android:id="@+id/bt_input_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="추가"
+        android:layout_alignRight="@id/spinner_input_exchange"
+        android:layout_below="@id/spinner_input_exchange"
+        android:layout_marginTop="50dp"
+        android:background="#ffdd00"
+        />
+
+    <EditText
+        android:id="@id/et_input_category"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="카테고리"
+        android:layout_toRightOf="@+id/tv_input_caterogy"
+        android:layout_marginLeft="30dp"
+        android:layout_alignBottom="@id/tv_input_caterogy"/>
+
+    <EditText
+        android:id="@+id/et_input_memo"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="상세내역"
+        android:layout_toRightOf="@+id/tv_input_memo"
+        android:layout_marginLeft="30dp"
+        android:layout_alignBottom="@id/tv_input_memo"
+        />
+
+    <EditText
+        android:id="@id/et_input_money"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="금액입력"
+       android:layout_alignLeft="@id/et_input_memo"
+        android:layout_alignBottom="@+id/tv_input_money"/>
+
+    <TextView
+        android:id="@id/tv_input_caterogy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="70dp"
+        android:paddingBottom="10dp"
+        android:textSize="15dp"
+        android:text="카테고리" />
+
+    <TextView
+        android:id="@id/tv_input_memo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_input_caterogy"
+        android:layout_alignLeft="@id/tv_input_caterogy"
+        android:layout_marginTop="50dp"
+        android:textSize="15dp"
+        android:paddingBottom="10dp"
+        android:text="상세내역" />
+
+    <TextView
+        android:id="@id/tv_input_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_input_memo"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="43dp"
+        android:textSize="15dp"
+        android:paddingBottom="10dp"
+        android:text="금액" />
+
+    <TextView
+        android:id="@id/tv_input_exchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="적용화폐"
+        android:layout_below="@id/tv_input_money"
+        android:layout_marginTop="50dp"
+        android:layout_alignLeft="@id/tv_input_caterogy"
+        android:textSize="15dp"
+        android:paddingBottom="10dp"
+        />
+</RelativeLayout>
+</LinearLayout>

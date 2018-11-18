@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:text="내역추가"
         android:layout_gravity="right"
-        android:layout_margin="15dp"/>
+        android:layout_margin="15dp"
+        android:background="#ffdd00"/>
 
     <TextView
         android:id="@+id/tvtotal"
@@ -27,8 +28,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#dddddd"
-        />
+        android:background="#ffffff" />
 
 
 </LinearLayout>
