@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
         /////////////////////////////카드뷰 생성//////////////////
 
         Button btadd = findViewById(R.id.btadd);
