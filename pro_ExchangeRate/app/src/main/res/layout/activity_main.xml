@@ -3,7 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="30dp">
 
+    <Button
+        android:id="@+id/btset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:text="단위설정"
+        android:background="#ffdd00"/>
 
     <Button
         android:id="@+id/btadd"
@@ -11,8 +24,9 @@
         android:layout_height="wrap_content"
         android:text="내역추가"
         android:layout_gravity="right"
-        android:layout_margin="15dp"
+        android:layout_marginLeft="15dp"
         android:background="#ffdd00"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvtotal"

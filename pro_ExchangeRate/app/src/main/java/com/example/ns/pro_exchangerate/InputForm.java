@@ -11,24 +11,21 @@ import android.widget.Spinner;
 
 public class InputForm extends AppCompatActivity {
     String exchange;
+    DbOpenHelper db;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.input);
 
         final EditText etmemo = findViewById(R.id.et_input_memo);
-
-
         final EditText etmoney = findViewById(R.id.et_input_money);
 
-        Spinner spinner = findViewById(R.id.spinner_input_exchange);
-/*        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               // exchange = parent.getItemAtPosition(position).toString();
-                //스피너입력값 전환
-            }
-        });*/
+        final Spinner spinner = findViewById(R.id.spinner_input_exchange);
+
+        //db생성
+        /*db = new DbOpenHelper();
+        db.open();*/
+
 
         Button btinputadd = findViewById(R.id.bt_input_add);
         btinputadd.setOnClickListener(new View.OnClickListener() {
@@ -41,11 +38,13 @@ public class InputForm extends AppCompatActivity {
 
                 //intent.putExtra("exchange", exchange);
                 intent.putExtra("check", 1);
+              //  db.insertColumn(catenum, etmemo.getText().toString(), etmoney.getText().toString(), spinner.getSelectedItem().toString(), );  환전값미지정
                 MainActivity.Infoarraylist.add(new MainActivity.Info(catenum,etmemo.getText().toString(),etmoney.getText().toString()));
                 startActivity(intent);
                 finish();
             }
         });
+
 
 
 

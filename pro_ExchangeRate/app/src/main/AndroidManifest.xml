@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".InputForm"></activity>
+        <activity android:name=".moneyset"></activity>
     </application>
 
 </manifest>

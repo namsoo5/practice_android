@@ -1,6 +1,7 @@
 package com.example.ns.pro_exchangerate;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView.LayoutManager mLayoutManager;
     RecyclerView.Adapter MyAdapter;
     static ArrayList<Info> Infoarraylist = new ArrayList<>(); //카드뷰형식 리스트저장
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,9 +31,11 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        int getcate = -1;
+     /*   int getcate = -1;
         String getmemo = null;
         String getmoney = null;
+       예시
+        */
         int check = gintent.getIntExtra("check",0);
 
 
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         /////////////////////////////카드뷰 생성//////////////////
 
-        Button btadd = findViewById(R.id.btadd);
+        Button btadd = findViewById(R.id.btadd);    //내역추가버튼
         btadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +68,19 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        /////////////////////////////
+
+        Button btset = findViewById(R.id.btset);  //화폐설정
+        btset.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), moneyset.class );
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     public static class Info{
