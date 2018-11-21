@@ -33,6 +33,10 @@ public class DbOpenHelper {
         }
     }
 
+    public  DbOpenHelper(Context context){
+        this.mCtx = context;
+    }
+
     public DbOpenHelper open() throws SQLException{
         mDBHelper = new DbHelper(mCtx, DATABASE_NAME, null, DATABASE_VERSION);
         mDB = mDBHelper.getWritableDatabase();
@@ -48,29 +52,45 @@ public class DbOpenHelper {
 
     ///////////////insert문
 
-    public long insertColumn(int category, String memo, String money, String exchange, String exchangemoney){
+    public long insertColumn(int category, String memo, String money, String exchange){
         ContentValues values = new ContentValues();
         values.put(CreatDB.CATEGORY, category);
         values.put(CreatDB.MEMO, memo);
         values.put(CreatDB.MONEY, money);
         values.put(CreatDB.EXCHANGE, exchange);
-        values.put(CreatDB.EXCHANGEMONEY, exchangemoney);
         return mDB.insert(CreatDB._TABLENAME0, null, values);
     }
 
     /////////////select
-    public Cursor selectColumns(){
-        return mDB.query(CreatDB._TABLENAME0, null, null, null, null, null,null);
+    public int getCategory(){
+        Cursor cursor = mDB.rawQuery("select category from maintable", null);
+        if(cursor.moveToFirst()) {
+            do {
+                return cursor.getInt(0);
+            } while (cursor.moveToNext());
+        }
+        return -1;
+    }
+    public void getMemo(){
+
     }
 
+    public void getMoney(){
+
+    }
+
+    public void getExchange(){
+
+    }
+
+
     ///////update
-    public boolean updateColumn(long id, int category, String memo, String money, String exchange, String exchangemoney){
+    public boolean updateColumn(long id, int category, String memo, String money, String exchange){
         ContentValues values = new ContentValues();
         values.put(CreatDB.CATEGORY, category);
         values.put(CreatDB.MEMO, memo);
         values.put(CreatDB.MONEY, money);
         values.put(CreatDB.EXCHANGE, exchange);
-        values.put(CreatDB.EXCHANGEMONEY, exchangemoney);
         return mDB.update(CreatDB._TABLENAME0, values, "id="+id, null)>0;
     }
 
@@ -80,6 +100,4 @@ public class DbOpenHelper {
     }
 
 
-
-    ///
 }

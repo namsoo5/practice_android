@@ -14,6 +14,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class moenysetAdapter extends ArrayAdapter {
+    DbOpenHelper db;
+
     private  final ArrayList al1;
     private  final ArrayList al2;
     private  final Activity context;
@@ -37,7 +39,7 @@ public class moenysetAdapter extends ArrayAdapter {
     }
 
     @Override
-    public int getCount() {
+    public int getCount() {   //개수
         return al1.size();
     }
 
@@ -47,6 +49,11 @@ public class moenysetAdapter extends ArrayAdapter {
 
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.moneylistview, null, false);
+
+        //db불러오기
+        //db.
+
+
         TextView left = (TextView) rowView.findViewById(R.id.textViewleft);
         TextView right = (TextView) rowView.findViewById(R.id.textViewright);
         left.setText(al1.get(position).toString());
