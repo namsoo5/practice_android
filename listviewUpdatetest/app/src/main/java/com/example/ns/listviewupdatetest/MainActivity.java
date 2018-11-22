@@ -26,9 +26,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ListView lvItems = findViewById(R.id.lvItems);   //어뎁타뷰만듬
+        malitems = new ArrayList<String>();//데이타만듬
         madapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, malitems);  //어뎁터만듬, 어뎁터와 데이터연결
         lvItems.setAdapter(madapter);  // 어뎁터랑 어뎁터뷰연결
-        malitems = new ArrayList<String>();//데이타만듬
+
         Button btadd = findViewById(R.id.button);
         final EditText etAdd = findViewById(R.id.editText);
         btadd.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         registerForContextMenu(lvItems);  //리스트뷰에 컨텍스트메뉴 달기
     }
 
-    //컨텍스트메뉴기능추가
+    //******컨텍스트메뉴기능추가*******
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -62,9 +63,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();  //메뉴로부터 어느뷰가 눌린건지 위치정보를 찾을수있음
         switch (item.getItemId()){
             case R.id.cmenuDelete :
-                malitems.remove();
+                malitems.remove(info.position);
                 madapter.notifyDataSetChanged();
                 return true;
             default:
