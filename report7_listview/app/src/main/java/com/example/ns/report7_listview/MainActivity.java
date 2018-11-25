@@ -1,7 +1,10 @@
 package com.example.ns.report7_listview;
 
+import android.graphics.Color;
+import android.graphics.drawable.PaintDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -14,10 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -74,13 +74,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        final ArrayList<Integer> check = new ArrayList<Integer>();
+
+        ///////////////////////////리스트뷰멀티리스너///////////////////
         lv.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             @Override
             public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-                Toast.makeText(getApplicationContext(), lv.getCheckedItemCount()+"selected",Toast.LENGTH_SHORT).show();
-
-
+                int count = lv.getCheckedItemCount();
+                mode.setTitle(count+"Selected");
+                lv.setSelector(R.color.puple);  //선택색초기화를위한선언
             }
 
             @Override
@@ -88,10 +89,8 @@ public class MainActivity extends AppCompatActivity {
                 mode.getMenuInflater().inflate(R.menu.actionmenu, menu);
                 return true;
             }
-
             @Override
             public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-
                 return false;
             }
 
@@ -99,9 +98,18 @@ public class MainActivity extends AppCompatActivity {
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                     switch (item.getItemId()){
                     case R.id.act_delete :
-
+                        SparseBooleanArray checkitem = lv.getCheckedItemPositions();  //체크된 position값을 boolean으로맵핑
+                        for(int i=alist1.size()-1 ; i>=0; i--){  //앞부터제거시 index위치 변경됌
+                            if(checkitem.get(i)){   //해당위치check상태 가져옴
+                                alist1.remove(i);
+                                alist2.remove(i);
+                            }
+                        }
+                        lv.clearChoices();    //선택상태초기화
                         adapter.notifyDataSetChanged();
-                        Toast.makeText(getApplicationContext(), "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                        mode.finish();  //액션모드종료
+                        mActionmode = null;  //액션모드종료
+                        lv.setSelector(R.color.white);    //선택색초기화를위한선언
                         return true;
                     default :
                         return false;
@@ -114,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    ///////////////////////////컨텍스트메뉴///////////////////////////////
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -135,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 return super.onContextItemSelected(item);
         }
     }
-
+////////////////////////////////액션모드 콜백/////////////////////////////////
     private ActionMode.Callback mActionMenu = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
