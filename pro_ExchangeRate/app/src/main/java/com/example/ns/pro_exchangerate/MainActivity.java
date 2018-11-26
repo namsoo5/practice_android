@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     RecyclerView.Adapter MyAdapter;
-    static ArrayList<Info> Infoarraylist = new ArrayList<>(); //카드뷰형식 리스트저장
-
+    static ArrayList<Info> Infoarraylist ; //카드뷰형식 리스트저장
+    DbOpenHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
 
         예시작성
         */
+        ////////db에서 데이터불러와서 카드뷰데이터넣어주기//////
+        //db생성
+        db = new DbOpenHelper(this);
+        db.open();
+        db.create();
+
+////////카드뷰에 데이터//////////
+        Infoarraylist = db.getArrayList();
         MyAdapter = new Content(Infoarraylist);
         mRecyclerView.setAdapter(MyAdapter);
 
@@ -65,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), InputForm.class );
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -87,6 +94,16 @@ public class MainActivity extends AppCompatActivity {
         public int category;
         public String memo;
         public String money;
+        public String changmoney;
+        public Info(int category){
+            this.category = category;
+            if(this.category == 1){
+                this.category=R.drawable.meal;
+            }else if(this.category==2) {
+                this.category=R.drawable.bear;
+            }else
+                this.category=R.drawable.x;
+        }
         public Info(int category, String memo, String money){
             this.category = category;
             if(this.category == 1){

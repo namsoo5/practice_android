@@ -23,9 +23,9 @@ public class InputForm extends AppCompatActivity {
         final Spinner spinner = findViewById(R.id.spinner_input_exchange);
 
         //db생성
-        db = new DbOpenHelper(this);
+        db = new DbOpenHelper(getApplicationContext());
         db.open();
-        db.create();
+      //  db.create();
 
         Button btinputadd = findViewById(R.id.bt_input_add);
         btinputadd.setOnClickListener(new View.OnClickListener() {
@@ -39,7 +39,7 @@ public class InputForm extends AppCompatActivity {
                 //intent.putExtra("exchange", exchange);
                 intent.putExtra("check", 1);
                 db.insertColumn(catenum, etmemo.getText().toString(), etmoney.getText().toString(), spinner.getSelectedItem().toString());
-                MainActivity.Infoarraylist.add(new MainActivity.Info(catenum,etmemo.getText().toString(),etmoney.getText().toString()));
+                //MainActivity.Infoarraylist.add(new MainActivity.Info(catenum,etmemo.getText().toString(),etmoney.getText().toString()));
                 startActivity(intent);
                 finish();
             }

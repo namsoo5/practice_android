@@ -7,6 +7,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 public class DbOpenHelper {
     public static final  String DATABASE_NAME = "main.db";
     private static final  int DATABASE_VERSION = 1;
@@ -66,11 +68,28 @@ public class DbOpenHelper {
         Cursor cursor = mDB.rawQuery("select category from maintable", null);
         if(cursor.moveToFirst()) {
             do {
-                return cursor.getInt(0);
+                return cursor.getInt(0);  //배열로반환하기!!!수정
             } while (cursor.moveToNext());
         }
         return -1;
     }
+
+    ArrayList<MainActivity.Info> savedb = new ArrayList<MainActivity.Info>();
+    public ArrayList getArrayList(){
+        Cursor cursor = mDB.rawQuery("select * from maintable", null);
+        if(cursor.moveToFirst())
+        do{
+            MainActivity.Info info = new MainActivity.Info(cursor.getInt(1));
+            //info.category = cursor.getInt(1);
+            info.memo = cursor.getString(2);
+            info.money = cursor.getString(3);
+            info.changmoney = cursor.getString(4);
+
+            savedb.add(info);
+        }while(cursor.moveToNext());
+        return savedb;
+    }
+
     public void getMemo(){
 
     }
