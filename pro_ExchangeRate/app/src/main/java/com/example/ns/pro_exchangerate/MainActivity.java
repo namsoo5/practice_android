@@ -31,19 +31,10 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-     /*   int getcate = -1;
-        String getmemo = null;
-        String getmoney = null;
-       예시
-        */
+
         int check = gintent.getIntExtra("check",0);
 
 
-       /* Infoarraylist.add(new Info(1,"돈돈","6000"));
-        Infoarraylist.add(new Info(2,"돈돈","15000"));
-
-        예시작성
-        */
         ////////db에서 데이터불러와서 카드뷰데이터넣어주기//////
         //db생성
         db = new DbOpenHelper(this);
@@ -84,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), moneyset.class );
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -104,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             }else
                 this.category=R.drawable.x;
         }
+        /*
         public Info(int category, String memo, String money){
             this.category = category;
             if(this.category == 1){
@@ -114,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 this.category=R.drawable.x;
             this.memo = memo;
             this.money = money;
-        }
+        }*/
     }
-
-
 }

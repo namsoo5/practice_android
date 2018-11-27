@@ -22,11 +22,11 @@ public class moneyset extends AppCompatActivity{
 
          alitems1 = new ArrayList<String>();
          alitems2 = new ArrayList<String>();
-        ListView liview = findViewById(R.id.listview);
+        //ListView liview = findViewById(R.id.listview);
          adapter = new moenysetAdapter(this, R.layout.moneylistview,  alitems1, alitems2);
 
-        liview.setAdapter(adapter);
-
+       // liview.setAdapter(adapter);
+/*
         Button bt = findViewById(R.id.bt_form_add);
         final EditText et1 = findViewById(R.id.et_form_kindsmoney);
         final EditText et2 = findViewById(R.id.et_form_exchange);
@@ -44,6 +44,6 @@ public class moneyset extends AppCompatActivity{
 
             }
         });
-
+*/
     }
 }

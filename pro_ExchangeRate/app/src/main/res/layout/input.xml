@@ -10,6 +10,8 @@
     android:layout_height="match_parent"
     android:layout_gravity="center">
 
+
+
     <TextView
         android:id="@+id/tvex"
         android:layout_width="wrap_content"
@@ -39,6 +41,16 @@
         android:layout_alignRight="@id/spinner_input_exchange"
         android:layout_below="@id/spinner_input_exchange"
         android:layout_marginTop="50dp"
+        android:background="#ffdd00"
+        />
+
+    <Button
+        android:id="@+id/bt_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="취소"
+        android:layout_alignTop="@id/bt_input_add"
+        android:layout_alignParentLeft="true"
         android:background="#ffdd00"
         />
 

@@ -8,63 +8,75 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:layout_gravity="center">
 
-    <Button
-        android:id="@+id/bt_form_add"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:text="+"
-        android:layout_toRightOf="@+id/et_form_exchange"
-        android:layout_alignTop="@+id/et_form_exchange"
-        android:layout_marginLeft="20dp"
-        android:background="#ffdd00"/>
+        <TextView
+            android:id="@+id/tv_form_kindsmoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="화폐"
+            android:layout_margin="30dp"
+            android:textColor="#33aa66"
+            android:textStyle="bold"
+            android:textSize="30dp"/>
 
-    <EditText
-        android:id="@+id/et_form_kindsmoney"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:layout_below="@+id/tv_form_kindsmoney"
-        android:layout_marginTop="10dp"
-        />
+        <TextView
+            android:id="@+id/tv_form_exchange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="환율"
+            android:textSize="30dp"
+            android:layout_margin="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/tv_form_kindsmoney"
+            android:textStyle="bold"
+            android:textColor="#33aa66"
+            />
 
-    <EditText
-        android:id="@id/et_form_exchange"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:layout_toRightOf="@id/et_form_kindsmoney"
-        android:layout_alignTop="@id/et_form_kindsmoney"/>
+        <TextView
+            android:id="@+id/tv_doller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/tv_form_kindsmoney"
+            android:textSize="20dp"
+            android:text="달러" />
 
-    <TextView
-        android:id="@id/tv_form_kindsmoney"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/et_form_kindsmoney"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="35dp"
-        android:text="화폐"
-        android:textSize="15dp"/>
+        <TextView
+            android:id="@+id/tv_yen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_doller"
+            android:layout_alignRight="@id/tv_doller"
+            android:layout_marginTop="30dp"
+            android:textSize="20dp"
+            android:text="앤" />
 
-    <TextView
-        android:id="@+id/tv_form_exchange"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="환율"
-        android:textSize="15dp"
-        android:layout_marginLeft="30dp"
-        android:layout_alignLeft="@id/et_form_exchange"
-        android:layout_alignBottom="@id/tv_form_kindsmoney" />
+        <TextView
+            android:id="@+id/tv_wian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_yen"
+            android:layout_alignRight="@id/tv_doller"
+            android:textSize="20dp"
+            android:layout_marginTop="30dp"
+            android:text="위안" />
+
+        <TextView
+            android:id="@+id/tv_euro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_wian"
+            android:layout_alignRight="@id/tv_doller"
+            android:textSize="20dp"
+            android:layout_marginTop="30dp"
+            android:text="유로" />
+
+
 
     </RelativeLayout>
 
-    <ListView
-        android:layout_marginTop="40dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listview"
-        />
 </LinearLayout>
