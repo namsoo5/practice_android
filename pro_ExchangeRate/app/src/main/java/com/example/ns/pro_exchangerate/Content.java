@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -34,10 +35,17 @@ public class Content extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @NonNull
     @Override  //행표시에사용되는 xml가져옴
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull final ViewGroup viewGroup, int i) {
 
         View v = (View)LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerow, viewGroup, false);
         MyViewHolder vh = new MyViewHolder(v);
+        v.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(viewGroup.getContext(), "확인", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
         return vh;
     }
 

@@ -76,45 +76,45 @@
             android:layout_marginTop="30dp"
             android:text="유로" />
 
-        <TextView
+        <EditText
             android:id="@+id/tv_doller_won"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_doller"
             android:layout_alignLeft="@id/tv_form_exchange"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:layout_below="@id/tv_form_kindsmoney"
             android:textSize="20dp"
             android:text="1200" />
 
-        <TextView
+        <EditText
             android:id="@+id/tv_yen_won"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_doller_won"
             android:layout_alignLeft="@id/tv_doller_won"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:textSize="20dp"
             android:text="100" />
 
-        <TextView
+        <EditText
             android:id="@+id/tv_wian_won"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_yen_won"
             android:layout_alignLeft="@id/tv_doller_won"
             android:textSize="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:text="10" />
 
-        <TextView
+        <EditText
             android:id="@+id/tv_euro_won"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_wian_won"
             android:layout_alignLeft="@id/tv_doller_won"
             android:textSize="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:text="1500" />
 
         <Button
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_euro_won"
             android:layout_alignLeft="@id/tv_form_exchange"
-            android:text="변경"
+            android:text="확인"
             android:layout_marginTop="60dp"/>
 
     </RelativeLayout>
