@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+
+    <CheckBox
+        android:id="@+id/check_piz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="피자" />
+
+    <CheckBox
+        android:id="@+id/check_spa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="스파게티" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+    <Button
+        android:id="@+id/bt_increase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="증가" />
+
+    <Button
+        android:id="@+id/bt_decrease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="감소" />
+
+</LinearLayout>
