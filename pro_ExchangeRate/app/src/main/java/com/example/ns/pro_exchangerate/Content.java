@@ -1,10 +1,12 @@
 package com.example.ns.pro_exchangerate;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,24 +15,31 @@ import java.util.ArrayList;
 
 public class Content extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     ArrayList<MainActivity.Info> alinfo;
+   // DbOpenHelper_money db ;
+    DbOpenHelper db1;
 
-    public Content(ArrayList<MainActivity.Info> info) {   //생성자
+    public Content(ArrayList<MainActivity.Info> info, Activity activity) {   //생성자
         this.alinfo = info;
+      //  db = new DbOpenHelper_money(activity);
+        db1 = new DbOpenHelper(activity);
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         ImageView mImageView;
         TextView mTextVIew1;
         TextView mtextView2;
-       // public TextView mTextVIew3;
+      //  TextView mTextVIew3;
+
 
         public MyViewHolder(View v){    //생성자
             super(v);
             mImageView = v.findViewById(R.id.iv);
             mTextVIew1 = v.findViewById(R.id.tvmemo);
             mtextView2 = v.findViewById(R.id.tvmoney);
-           // mTextVIew3 = v.findViewById(R.id.tvwon);
+          //  mTextVIew3 = v.findViewById(R.id.tvwon);
         }
+
+
     }
 
     @NonNull
@@ -57,6 +66,9 @@ public class Content extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         myViewHolder.mImageView.setImageResource(alinfo.get(i).category);
         myViewHolder.mTextVIew1.setText(alinfo.get(i).memo);
         myViewHolder.mtextView2.setText(alinfo.get(i).money);
+
+       // int num = Integer.parseInt(alinfo.get(i).money.toString());
+       // myViewHolder.mTextVIew3.setText(db.getexchangmoney();
     }
 
     @Override  //recyclerview 행갯수리턴

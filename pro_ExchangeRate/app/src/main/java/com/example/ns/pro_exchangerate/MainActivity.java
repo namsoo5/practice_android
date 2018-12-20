@@ -2,6 +2,7 @@ package com.example.ns.pro_exchangerate;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.INotificationSideChannel;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView.Adapter MyAdapter;
     static ArrayList<Info> Infoarraylist ; //카드뷰형식 리스트저장
     DbOpenHelper db;
+    //DbOpenHelper_money db_money;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +44,14 @@ public class MainActivity extends AppCompatActivity {
         db = new DbOpenHelper(this);
         db.open();
         db.create();
-
+/*
+        db_money = new DbOpenHelper_money(this);
+        db_money.open();
+        db_money.create();
+*/
 ////////카드뷰에 데이터//////////
         Infoarraylist = db.getArrayList();
-        MyAdapter = new Content(Infoarraylist);
+        MyAdapter = new Content(Infoarraylist, this);
         mRecyclerView.setAdapter(MyAdapter);
 
         if(check==1) {
@@ -82,31 +89,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static class Info{
+    public static class Info {
         public int category;
         public String memo;
         public String money;
-        public String changmoney;
-        public Info(int category){
-            this.category = category;
-            if(this.category == 1){
-                this.category=R.drawable.meal;
-            }else if(this.category==2) {
-                this.category=R.drawable.bear;
-            }else
-                this.category=R.drawable.x;
+        public String changmoney;  //환전값tv id값저장
+
+        public Info(int category) {
+            this.category = category;   //카테고리 사진지정
+            if (this.category == 1) {
+                this.category = R.drawable.meal;
+            } else if (this.category == 2) {
+                this.category = R.drawable.bear;
+            } else
+                this.category = R.drawable.x;
         }
-        /*
-        public Info(int category, String memo, String money){
-            this.category = category;
-            if(this.category == 1){
-                this.category=R.drawable.meal;
-            }else if(this.category==2) {
-                this.category=R.drawable.bear;
-            }else
-                this.category=R.drawable.x;
-            this.memo = memo;
-            this.money = money;
-        }*/
     }
 }

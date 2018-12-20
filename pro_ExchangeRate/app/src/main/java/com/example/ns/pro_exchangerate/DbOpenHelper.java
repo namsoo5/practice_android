@@ -77,17 +77,19 @@ public class DbOpenHelper {
     ArrayList<MainActivity.Info> savedb = new ArrayList<MainActivity.Info>();
     public ArrayList getArrayList(){
         Cursor cursor = mDB.rawQuery("select * from maintable", null);
-        if(cursor.moveToFirst())
-        do{
-            MainActivity.Info info = new MainActivity.Info(cursor.getInt(1));
-            //info.category = cursor.getInt(1);
-            info.memo = cursor.getString(2);
-            info.money = cursor.getString(3);
-            info.changmoney = cursor.getString(4);
+        if(cursor.moveToFirst()) {
+            do {
+                MainActivity.Info info = new MainActivity.Info(cursor.getInt(1));
+               // info.category = cursor.getInt(1);
+                info.memo = cursor.getString(2);
+                info.money = cursor.getString(3);
+                info.changmoney = cursor.getString(4);
 
-            savedb.add(info);
-        }while(cursor.moveToNext());
-        return savedb;
+                savedb.add(info);
+            } while (cursor.moveToNext());
+            return savedb;
+        }
+        return null;
     }
 
     public void getMemo(){
@@ -98,8 +100,17 @@ public class DbOpenHelper {
 
     }
 
-    public void getExchange(){
+    public int getExchange(int id){
+        Cursor cursor = mDB.rawQuery("select exchange from maintable where id="+id, null);
 
+        if(cursor.moveToFirst()){
+            do{
+                return cursor.getInt(0);
+
+            }while(cursor.moveToNext());
+        }
+
+        return -1;
     }
 
 
