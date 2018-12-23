@@ -326,6 +326,12 @@
         android:layout_width="match_parent"
         android:layout_height="250dp">
 
+        <ListView
+            android:id="@+id/lv_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
+        </ListView>
         <Button
             android:id="@+id/bt_allview"
             android:layout_width="match_parent"

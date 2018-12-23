@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/user1"
+        android:layout_alignParentLeft="true"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FFCCCCCC"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_toRightOf="@id/imageView"
+        android:layout_marginLeft="5dp">
+
+        <TextView
+            android:id="@+id/tv_listreview_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="namsoo**"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="12dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_listreview_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10분전"
+                android:textSize="13dp"/>
+
+            <RatingBar
+                android:id="@+id/ratingbar_listreview"
+                style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:isIndicator="true"
+                android:max="10"
+                android:numStars="5"
+                android:stepSize="0.1"
+                android:layout_marginLeft="10dp"
+                android:rating="5"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_listreview_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="재밌다? 재밋다!"
+            android:textColor="#000000"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_listreview_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="추천 0"
+                android:textSize="12dp"
+                android:textColor="#000000"/>
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="10dp"
+                android:background="#cccccc"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center">
+            </View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="신고하기"
+                android:textSize="12dp"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
