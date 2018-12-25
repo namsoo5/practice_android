@@ -52,6 +52,7 @@
                     android:textColor="#ffffff"
                     android:layout_marginBottom="15dp"/>
                 <ImageView
+                    android:id="@+id/im_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_15"

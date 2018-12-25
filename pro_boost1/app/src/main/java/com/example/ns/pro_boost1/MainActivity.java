@@ -1,11 +1,15 @@
 package com.example.ns.pro_boost1;
 
+import android.content.Intent;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,6 +18,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    final int REQ_CODE_EditReviewActivity = 1;
 
     int likecount;
     int unlikecount;
@@ -85,7 +91,15 @@ public class MainActivity extends AppCompatActivity {
         bt_review_edit.setOnClickListener(new View.OnClickListener() {   //작성하기클릭시
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "작성하기 클릭", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), EditReviewActivity.class);
+                TextView tv_title = findViewById(R.id.tv_title);
+
+
+                intent.putExtra("title", tv_title.getText().toString());
+                intent.putExtra("age", 15);  //관람나이
+
+                startActivityForResult(intent, REQ_CODE_EditReviewActivity);
+
             }
         });
 
@@ -96,6 +110,20 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "모두보기 클릭", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode){
+            case REQ_CODE_EditReviewActivity:
+
+                break;
+
+        }
     }
 
     void likeDecrease (){  //싫어요클릭시 좋아요감소, 좋아요클릭상태시 좋아요감소
