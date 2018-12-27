@@ -2,6 +2,7 @@
 
 <ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ScrollView_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -137,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="예매율"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textColor="#999999"/>
             <TextView
                 android:layout_gravity="center"
@@ -164,7 +165,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="평점"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textColor="#999999"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -172,6 +173,7 @@
                 android:layout_gravity="center">
                 <RatingBar
                     style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                    android:id="@+id/ratingbar_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -180,10 +182,11 @@
                     android:numStars="5"
                     android:stepSize="0.1" />
                 <TextView
+                    android:id="@+id/tv_score"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="8.2"
+                    android:text="0.0"
                     android:textSize="16dp"
                     android:textStyle="bold"
                     android:textColor="#999999"
@@ -206,7 +209,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="누적관객수"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textColor="#999999"/>
             <TextView
                 android:layout_gravity="center"
@@ -325,12 +328,12 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="wrap_content">
 
         <ListView
             android:id="@+id/lv_review"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_alignParentTop="true">
         </ListView>
         <Button
@@ -339,6 +342,7 @@
             android:layout_height="wrap_content"
             android:text="모두보기"
             android:background="@drawable/allview"
+            android:layout_below="@id/lv_review"
             android:layout_marginBottom="10dp"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
