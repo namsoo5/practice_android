@@ -12,4 +12,17 @@
         뭉치면 백성, 흩어지면 도적!
  망할 세상을 뒤집기 위해, 백성이 주인인 새 세상을 향해 도치를 필두로 한 군도는 백성의 적,
  조윤과 한 판 승부를 시작하는데...</string>
+    <string name="title_activity_moive_list">MoiveListActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_example">Example action</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

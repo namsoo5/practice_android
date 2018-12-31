@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void updateRating(){
+    void updateRating(){ //평점 업데이트
         float sum=0;
         for(float star : rating){
             sum +=star;
