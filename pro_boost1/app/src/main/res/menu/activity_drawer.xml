@@ -6,32 +6,26 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_0"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="첫번째 화면" />
+            android:icon="@drawable/navi_movielist"
+            android:title="영화 목록" />
         <item
             android:id="@+id/nav_1"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="두번째 화면" />
+            android:icon="@drawable/navi_movieapi"
+            android:title="영화 API" />
         <item
             android:id="@+id/nav_2"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="세번째 화면" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:icon="@drawable/navi_reservation"
+            android:title="예매하기" />
+
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="설정">
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:icon="@drawable/navi_setting"
+                android:title="사용자 설정" />
+
         </menu>
     </item>
 

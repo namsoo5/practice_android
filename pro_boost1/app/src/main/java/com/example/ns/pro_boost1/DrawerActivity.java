@@ -1,5 +1,6 @@
 package com.example.ns.pro_boost1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -14,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -32,11 +35,13 @@ public class DrawerActivity extends AppCompatActivity
 
     ViewPager pager;
 
+    FrameLayout frame;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
+        frame = findViewById(R.id.container); //화면전환을위한
 
         pager = findViewById(R.id.pager);
         pager.setClipToPadding(false);  //자식들의 패딩무시(양쪽미리보기를위한선언)
@@ -74,32 +79,36 @@ public class DrawerActivity extends AppCompatActivity
 
         NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-/*
-        fragment1 = new Fragment1();
-        fragment2 = new Fragment2();
-        fragment3 = new Fragment3();
 
-       // getSupportFragmentManager().beginTransaction().add(R.id.container, fragment1).commit();
+
     }
 
-    @Override  //임의의 함수만듬
+     //임의의 함수만듬  네비게이션바클릭시
     public void onFragmentSelected(int position, Bundle bundle) {
         Fragment curFragment = null;
         if(position==0) {
-            curFragment = fragment1;
-            toolbar.setTitle("첫번째화면");  //타이틀수정
+
         }
         else if(position==1) {
-            curFragment = fragment2;
-            toolbar.setTitle("두번째화면");
+
         }
         else if(position==2) {
-            curFragment = fragment3;
-            toolbar.setTitle("세번째화면");
+
+        }
+        else if(position==3) {
+
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, curFragment).commit();
-        */
+        else if(position==4) {
+
+        }
+        else if(position==5) {
+
+        }
+
+
+      //  getSupportFragmentManager().beginTransaction().replace(R.id.container, curFragment).commit();
+
     }
 
     @Override
@@ -141,19 +150,18 @@ public class DrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_0) {
-            Toast.makeText(this, "첫번째메뉴", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "영화 목록", Toast.LENGTH_SHORT).show();
+            frame.setVisibility(View.GONE);   //상세목록제거
+            pager.setVisibility(View.VISIBLE);  //뷰페이저 뜸
+            setTitle("영화 목록");
            // onFragmentSelected(0, null);  //fragment 전환함수실행
         } else if (id == R.id.nav_1) {
-            Toast.makeText(this, "두번째메뉴", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "영화 API", Toast.LENGTH_SHORT).show();
            // onFragmentSelected(1, null);
         } else if (id == R.id.nav_2) {
-            Toast.makeText(this, "세번째메뉴", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "예매하기", Toast.LENGTH_SHORT).show();
            // onFragmentSelected(2, null);
-        } else if (id == R.id.nav_manage) {
-
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 
@@ -195,5 +203,36 @@ public class DrawerActivity extends AppCompatActivity
        public CharSequence getPageTitle(int position) {
             return "페이지 "+position;
         }*/
+    }
+
+    public void ExecuteMain(int page){ //프레그먼트에서 상세보기클릭시  실행하는함수
+
+        pager.setVisibility(View.GONE);  //뷰페이지사라짐
+        frame.setVisibility(View.VISIBLE);  //상세목록 뜸
+        setTitle("영화 상세");
+        Fragment exfragment = new MainActivity();
+/*
+        switch (page){
+            case 0:
+                exfragment = fragment1;
+                break;
+            case 1:
+                exfragment = fragment2;
+                break;
+            case 2:
+                exfragment = fragment3;
+                break;
+            case 3:
+                exfragment = fragment4;
+                break;
+            case 4:
+                exfragment = fragment5;
+                break;
+            case 5:
+                exfragment = fragment6;
+                break;
+        }
+*/
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, exfragment).commit();
     }
 }
