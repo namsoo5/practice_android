@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -20,11 +21,20 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     TextView tv;
-
+    ImageView iv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        iv = findViewById(R.id.imageview);
+        Button bt2 = findViewById(R.id.button2);
+        bt2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendImageRequest();
+            }
+        });
 
         tv = findViewById(R.id.textView);
         Button bt = findViewById(R.id.button);
@@ -39,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
             AppHelper.requestQueue = Volley.newRequestQueue(getApplicationContext());
         //시작하면 reqestQueue가 만들어짐
     }
+
+    public void sendImageRequest() {
+        String url = "https://upload.wikimedia.org/wikipedia/ko/thumb/e/ea/%EC%98%81%ED%99%94_%EB%B3%B4%ED%97%A4%EB%AF%B8%EC%95%88_%EB%9E%A9%EC%86%8C%EB%94%94.jpg/250px-%EC%98%81%ED%99%94_%EB%B3%B4%ED%97%A4%EB%AF%B8%EC%95%88_%EB%9E%A9%EC%86%8C%EB%94%94.jpg";
+        ImageLoadTask task = new ImageLoadTask(url, iv);
+        task.execute();
+    }
+
 
     public void sendRequest() {
         String url = "https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=430156241533f1d058c603178cc3ca0e&targetDt=20120101";
