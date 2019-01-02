@@ -19,6 +19,15 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.ns.pro_boost1.data.MovieListArray;
+import com.example.ns.pro_boost1.data.MovieListInfo;
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 public class DrawerActivity extends AppCompatActivity
@@ -36,10 +45,17 @@ public class DrawerActivity extends AppCompatActivity
     ViewPager pager;
 
     FrameLayout frame;
+    int id=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+
+        if(AppHelper.requestQueue == null){
+            AppHelper.requestQueue = Volley.newRequestQueue(getApplicationContext());
+        }
+
+
 
         frame = findViewById(R.id.container); //화면전환을위한
 
@@ -210,29 +226,38 @@ public class DrawerActivity extends AppCompatActivity
         pager.setVisibility(View.GONE);  //뷰페이지사라짐
         frame.setVisibility(View.VISIBLE);  //상세목록 뜸
         setTitle("영화 상세");
-        Fragment exfragment = new MainActivity();
-/*
+        Fragment exfragment =  new MainActivity();
+
+        String movieurl= "http://boostcourse-appapi.connect.or.kr:10000/movie/readMovie?id=";
+        String commenturl = "http://boostcourse-appapi.connect.or.kr:10000/movie/readCommentList?id=";
         switch (page){
             case 0:
-                exfragment = fragment1;
+               ((MainActivity) exfragment).sendRequest(1,movieurl);
+               ((MainActivity) exfragment).sendCommentRequest(1, commenturl);
                 break;
             case 1:
-                exfragment = fragment2;
+                ((MainActivity) exfragment).sendRequest(2,movieurl);
+                ((MainActivity) exfragment).sendCommentRequest(2, commenturl);
                 break;
             case 2:
-                exfragment = fragment3;
+                ((MainActivity) exfragment).sendRequest(3,movieurl);
+                ((MainActivity) exfragment).sendCommentRequest(3, commenturl);
                 break;
             case 3:
-                exfragment = fragment4;
+                ((MainActivity) exfragment).sendRequest(4,movieurl);
+                ((MainActivity) exfragment).sendCommentRequest(4, commenturl);
                 break;
             case 4:
-                exfragment = fragment5;
+                ((MainActivity) exfragment).sendRequest(5,movieurl);
+                ((MainActivity) exfragment).sendCommentRequest(5, commenturl);
                 break;
-            case 5:
-                exfragment = fragment6;
+            default:
                 break;
         }
-*/
+
         getSupportFragmentManager().beginTransaction().replace(R.id.container, exfragment).commit();
     }
+
+    
+
 }

@@ -10,12 +10,27 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.ns.pro_boost1.comment.CommentInfo;
+import com.example.ns.pro_boost1.comment.CommentListArray;
+import com.google.gson.Gson;
+
 public class EditReviewActivity extends AppCompatActivity {
     ImageView im_editreview_age;
+    int movie_id=0;
+    String createurl = "http://boostcourse-appapi.connect.or.kr:10000/movie/createComment?";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_review);
+
+        if(AppHelper.requestQueue == null){
+            AppHelper.requestQueue = Volley.newRequestQueue(getApplicationContext());
+        }
 
         TextView tv_editreview_title = findViewById(R.id.tv_editreview_title);
         im_editreview_age = findViewById(R.id.im_editreview_age);
@@ -29,13 +44,17 @@ public class EditReviewActivity extends AppCompatActivity {
         final RatingBar ratingBar = findViewById(R.id.ratingbar_editreview);
 
 
+        movie_id = getIntent().getIntExtra("id", 0);
+
         bt_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra("review", et.getText().toString());
-                intent.putExtra("rating", ratingBar.getRating());
-                setResult(RESULT_OK, intent);
+
+                String writer = "nam";
+                float rating = ratingBar.getRating();
+                sendCommentRequest(movie_id, writer, rating, et.getText().toString());
+
+                setResult(RESULT_OK);
                 finish();
             }
         });
@@ -49,6 +68,32 @@ public class EditReviewActivity extends AppCompatActivity {
 
 
     }
+
+
+    public void sendCommentRequest(int id, String writer, float rating, String contents) {
+        String url = createurl+"id="+id+"&writer="+writer+"&rating="+rating+"&contents="+contents;
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                url,
+                new Response.Listener<String>() {//응답을 문자열로받아서 넣어달라는뜻
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                },
+                new Response.ErrorListener() {  //에러시실행
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        //자동캐싱기능이있음 이전결과가 그대로보여질수도있다.
+        request.setShouldCache(false); //이전결과가잇더라도 새로요청해서 결과보여줌
+        AppHelper.requestQueue.add(request);
+
+    }
+
 
     void selectImage(int age){
         switch (age){
