@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+        <TextView
+            android:id="@+id/camera1_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 사진 "
+            android:textSize="24dp"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/camera1_iv"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="100dp"
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:layout_marginTop="40dp"
+                android:id="@+id/camera1_bt_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사진촬영"
+                android:background="#777777"
+                android:textColor="#ffffff"
+                android:layout_gravity="center_horizontal"
+            />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
