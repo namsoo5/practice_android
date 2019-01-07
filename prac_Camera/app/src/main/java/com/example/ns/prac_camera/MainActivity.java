@@ -4,17 +4,23 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -24,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView iv;
     String filename; //파일이름
+    Uri uri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
                 String date = dateFormat.format(new Date());  //사진이름을 시간으로구분
                 String photoFile = "테스트"+date+".jpg";   //사진이름
                 filename = pictureFileDir.getPath()+File.separator+photoFile;
-                intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(getApplicationContext(), "com.example.ns.prac_camera.fileprovider", new File(filename)));
+                uri = FileProvider.getUriForFile(getApplicationContext(), "com.example.ns.prac_camera.fileprovider", new File(filename));
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                //사진저장
                 startActivityForResult(intent, 100);
 
@@ -58,12 +66,12 @@ public class MainActivity extends AppCompatActivity {
         return sdDir;   //2번째인자 : 폴더이름 filepath랑 같아야함
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 100 ) {
             if(resultCode == RESULT_OK) {
-                iv.setImageURI(data.getData());    //이미지뷰에 사진넣기
+
+                iv.setImageURI(uri);    //이미지뷰에 사진넣기
 
                 /* 갤러리에 보이게해주는 코드  */
                 ContentValues values = new ContentValues();
