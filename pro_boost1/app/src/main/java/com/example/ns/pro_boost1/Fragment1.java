@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.ns.pro_boost1.data.MovieList;
 import com.example.ns.pro_boost1.data.MovieListArray;
 import com.example.ns.pro_boost1.data.MovieListInfo;
+import com.example.ns.pro_boost1.dbHelper.DatabaseHelper;
 import com.google.gson.Gson;
 
 public class Fragment1 extends Fragment {
@@ -35,7 +36,7 @@ public class Fragment1 extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         activity = (DrawerActivity)context;
-
+        DatabaseHelper.openDatabase(activity, "boost");
         sendRequest();
     }
 
@@ -113,8 +114,15 @@ public class Fragment1 extends Fragment {
                     .into(iv);
 
 
+            DatabaseHelper.createMovieTable();
+            DatabaseHelper.insertMovie(movielist.id, movielist.title, movielist.reservation_rate,
+                    movielist.grade, movielist.date, movielist.image);
+
 
         }
     }
+
+
+
 
 }
