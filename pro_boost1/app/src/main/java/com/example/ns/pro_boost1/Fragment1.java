@@ -1,10 +1,12 @@
 package com.example.ns.pro_boost1;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +39,8 @@ public class Fragment1 extends Fragment {
         super.onAttach(context);
         activity = (DrawerActivity)context;
         DatabaseHelper.openDatabase(activity, "boost");
-        sendRequest();
+
+
     }
 
     @Override
@@ -65,6 +68,11 @@ public class Fragment1 extends Fragment {
         age = rootView.findViewById(R.id.tv_fragment1_age);
         day = rootView.findViewById(R.id.tv_fragment1_day);
 
+
+        if(DrawerActivity.status == NetworkStatus.TYPE_NOT_CONNECTED)
+            notConnectNetwork(1);  //인터넷연결x시 db에서불러옴
+        else
+            sendRequest();
 
         return rootView;
     }
@@ -120,6 +128,27 @@ public class Fragment1 extends Fragment {
 
 
         }
+    }
+
+    public void notConnectNetwork(int id){
+        Cursor cursor = DatabaseHelper.selectMovie(id);
+        cursor.moveToLast();  //최근저장내역가져옴
+
+        String title = cursor.getString(0);
+        float reservation_rate = cursor.getFloat(1);
+        int grade = cursor.getInt(2);
+        String date = cursor.getString(3);
+        String image = cursor.getString(4);
+
+
+        tv_title.setText(""+id+". "+title);
+        reservation.setText("예매율 "+reservation_rate+"%");
+        age.setText(grade+"세 관람가");
+        day.setText(date+"일 개봉");
+
+        Glide.with(activity)
+                .load(image)
+                .into(iv);
     }
 
 

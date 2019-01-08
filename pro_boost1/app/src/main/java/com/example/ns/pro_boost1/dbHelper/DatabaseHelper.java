@@ -61,11 +61,11 @@ public class DatabaseHelper {
         }
     }
 
-    public static Cursor selectMovie(){
+    public static Cursor selectMovie(int id){
         println("selectmovie()호출");
 
         if(database!=null){
-            String sql = "select id, title, reservation_rate, grade, dateValue, image from movie";
+            String sql = "select title, reservation_rate, grade, dateValue, image from movie where id="+id;
             Cursor cursor = database.rawQuery(sql, null);
             println("조회데이터수: "+cursor.getCount());
 

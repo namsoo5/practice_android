@@ -1,12 +1,16 @@
 package com.example.ns.pro_boost1;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -46,6 +50,8 @@ public class DrawerActivity extends AppCompatActivity
 
     FrameLayout frame;
     int id=0;
+
+    static int status; // 네트워크연결상태확인변수
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +60,14 @@ public class DrawerActivity extends AppCompatActivity
         if(AppHelper.requestQueue == null){
             AppHelper.requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
+
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE);  //네트워크권한
+        if(permissionCheck == PackageManager.PERMISSION_DENIED){  // 권한거부 되있다면
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_NETWORK_STATE}, 1); //권한허용창
+        }
+
+        status = NetworkStatus.getConnectivityStatus(getApplicationContext());  //네트워크연결상태
+
 
 
 
