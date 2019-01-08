@@ -2,10 +2,13 @@ package com.example.ns.pro_boost1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,6 +32,7 @@ import com.example.ns.pro_boost1.comment.CommentListArray;
 import com.example.ns.pro_boost1.data.MovieList;
 import com.example.ns.pro_boost1.data.MovieListArray;
 import com.example.ns.pro_boost1.data.MovieListInfo;
+import com.example.ns.pro_boost1.dbHelper.DatabaseReadHelper;
 import com.example.ns.pro_boost1.readmovie.ReadMoveListArray;
 import com.example.ns.pro_boost1.readmovie.ReadMovie;
 import com.example.ns.pro_boost1.readmovie.ReadMovieInfo;
@@ -60,14 +64,14 @@ public class MainActivity extends Fragment {
     TextView tv_score;
     ScrollView scrollView;
     RatingBar ratingBar;
-    TextView tv_title;
+    TextView mtv_title;
 
     Context activity;
 
-    ImageView iv;
-    ImageView iv_age;
-    TextView tv_date;
-    TextView tv_hour;
+    ImageView miv;
+    ImageView miv_age;
+    TextView mtv_date;
+    TextView mtv_hour;
     TextView tv_reservation;
     TextView tv_audience;
     TextView tv_synopsis;
@@ -77,12 +81,15 @@ public class MainActivity extends Fragment {
     ArrayList<CommentList> commentLists;
 
     int age = 0;
-    int movie_id=0;
+    public static int movie_id=0;
     ArrayList<Float> rating;
     ArrayList<String> contents;
     ArrayList<String> id;
     ArrayList<String> time;
     ArrayList<Integer> recommend;
+
+    String movieurl= "http://boostcourse-appapi.connect.or.kr:10000/movie/readMovie?id=";
+    String commenturl = "http://boostcourse-appapi.connect.or.kr:10000/movie/readCommentList?id=";
 
     @Override
     public void onDetach() {
@@ -97,6 +104,8 @@ public class MainActivity extends Fragment {
         if (context != null)
             activity = context;
 
+
+
     }
 
     @Override
@@ -110,7 +119,7 @@ public class MainActivity extends Fragment {
 
         tv_score = rootView.findViewById(R.id.tv_score);  //평점텍스트
         ratingBar = rootView.findViewById(R.id.ratingbar_main); //평점별
-        tv_title = rootView.findViewById(R.id.tv_title);//타이틀제목
+        mtv_title = rootView.findViewById(R.id.tv_title);//타이틀제목
 
         bt_like.setOnClickListener(new View.OnClickListener() {  //좋아요 버튼클릭
             @Override
@@ -158,7 +167,7 @@ public class MainActivity extends Fragment {
             @Override
             public void onClick(View v) {               //작성하기
                 Intent intent = new Intent(activity, EditReviewActivity.class);
-                intent.putExtra("title", tv_title.getText().toString());
+                intent.putExtra("title", mtv_title.getText().toString());
                 intent.putExtra("age", age);  //관람나이
                 intent.putExtra("id", movie_id);//영화구분
 
@@ -172,7 +181,7 @@ public class MainActivity extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity, AllViewActivity.class);
-                intent.putExtra("title", tv_title.getText().toString());
+                intent.putExtra("title", mtv_title.getText().toString());
                 intent.putExtra("age", age);  //관람나이
                 intent.putExtra("score", tv_score.getText().toString()); //평점
 
@@ -192,15 +201,24 @@ public class MainActivity extends Fragment {
         });
 
 
-        iv = rootView.findViewById(R.id.im_title);
-        iv_age = rootView.findViewById(R.id.im_age);
-        tv_date = rootView.findViewById(R.id.tv_date);
-        tv_hour = rootView.findViewById(R.id.tv_hour);
+        miv = rootView.findViewById(R.id.im_title);
+        miv_age = rootView.findViewById(R.id.im_age);
+        mtv_date = rootView.findViewById(R.id.tv_date);
+        mtv_hour = rootView.findViewById(R.id.tv_hour);
         tv_reservation = rootView.findViewById(R.id.tv_reservation);
         tv_audience = rootView.findViewById(R.id.tv_audience);
         tv_synopsis = rootView.findViewById(R.id.tv_synopsis);
         tv_director = rootView.findViewById(R.id.tv_director);
         tv_actor = rootView.findViewById(R.id.tv_actor);
+
+
+
+        if(DrawerActivity.status == NetworkStatus.TYPE_NOT_CONNECTED){
+            notConnectReadNetwork(movie_id);
+        }else{
+            sendRequest(movie_id);
+            sendCommentRequest(movie_id);
+        }
 
         return rootView;
     }
@@ -213,13 +231,13 @@ public class MainActivity extends Fragment {
             case REQ_CODE_EditReviewActivity:
                 if (resultCode == RESULT_OK) {
                     adapter.notifyDataSetChanged();
-                    sendCommentRequest( movie_id, commenturl);
+                    sendCommentRequest( movie_id);
                 }
                 break;
             case REQ_CODE_AllViewActivity:
                 if (resultCode == RESULT_OK) {
                     adapter.notifyDataSetChanged();
-                    sendCommentRequest( movie_id, commenturl);  //댓글갱신
+                    sendCommentRequest( movie_id);  //댓글갱신
                    }
                 break;
 
@@ -241,9 +259,9 @@ public class MainActivity extends Fragment {
     }
 
 
-    public void sendRequest(int id, String url) {
+    public void sendRequest(int id) {
         this.movie_id = id;
-        String movieurl = url + id;
+        movieurl = movieurl + id;
         StringRequest request = new StringRequest(
                 Request.Method.GET,
                 movieurl,
@@ -279,10 +297,10 @@ public class MainActivity extends Fragment {
             ReadMovie readMovie = readMoveListArray.result.get(0);
 
 
-            tv_title.setText(readMovie.title);
+            mtv_title.setText(readMovie.title);
             selectImage(readMovie.grade); //관람가이미지
-            tv_date.setText(readMovie.date + " 개봉");
-            tv_hour.setText(readMovie.genre + " / " + readMovie.duration + " 분");
+            mtv_date.setText(readMovie.date + " 개봉");
+            mtv_hour.setText(readMovie.genre + " / " + readMovie.duration + " 분");
             tv_like.setText("" + readMovie.like);
             likecount = readMovie.like;
             unlikecount = readMovie.dislike;
@@ -297,7 +315,11 @@ public class MainActivity extends Fragment {
 
             Glide.with(activity)
                     .load(readMovie.thumb)
-                    .into(iv);
+                    .into(miv);
+
+            DatabaseReadHelper.openDatabase(activity, "boost");
+            DatabaseReadHelper.createReadTable();
+            DatabaseReadHelper.insertRead(readMovie);  //서버연결시 db저장
 
 
         }
@@ -307,26 +329,26 @@ public class MainActivity extends Fragment {
         this.age = age;
         switch (age) {
             case 0:
-                iv_age.setImageResource(R.drawable.ic_all);
+                miv_age.setImageResource(R.drawable.ic_all);
                 break;
             case 12:
-                iv_age.setImageResource(R.drawable.ic_12);
+                miv_age.setImageResource(R.drawable.ic_12);
                 break;
             case 15:
-                iv_age.setImageResource(R.drawable.ic_15);
+                miv_age.setImageResource(R.drawable.ic_15);
                 break;
             case 19:
-                iv_age.setImageResource(R.drawable.ic_19);
+                miv_age.setImageResource(R.drawable.ic_19);
                 break;
             default:
-                iv_age.setImageResource(R.drawable.ic_all);
+                miv_age.setImageResource(R.drawable.ic_all);
                 break;
         }
     }
 
 
-    public void sendCommentRequest(int id, String url) {
-        String commenturl = url + id;
+    public void sendCommentRequest(int id) {
+        commenturl = commenturl + id;
         StringRequest request = new StringRequest(
                 Request.Method.GET,
                 commenturl,
@@ -362,6 +384,58 @@ public class MainActivity extends Fragment {
             commentLists = commentListArray.result;
             adapter = new ListView_review(activity, R.layout.listview_review,commentLists);   //listview review목록
             lv_review.setAdapter(adapter);
+
+        }
+    }
+
+    public void notConnectReadNetwork(int id){
+        DatabaseReadHelper.openDatabase(activity, "boost");
+        Cursor cursor = DatabaseReadHelper.selectRead(id);
+
+        if(cursor!=null) { // 에러방지
+            cursor.moveToLast();  //최근저장내역가져옴
+
+            String title = cursor.getString(1);
+            int grade = cursor.getInt(2);
+            String date = cursor.getString(3);
+            String genre = cursor.getString(4);
+            int duration = cursor.getInt(5);
+            int like= cursor.getInt(6);
+            int dislike= cursor.getInt(7);
+            int reservation_grade = cursor.getInt(8);
+            float reservation_rate = cursor.getFloat(9);
+            float user_rating = cursor.getFloat(10);
+            int audience = cursor.getInt(11);
+            String synopsis= cursor.getString(12);
+            String director =cursor.getString(13);
+            String actor= cursor.getString(14);
+            String thumb = cursor.getString(15);
+
+
+
+            mtv_title.setText(title);
+            selectImage(grade); //관람가이미지
+            mtv_date.setText(date + " 개봉");
+            mtv_hour.setText(genre + " / " + duration + " 분");
+            tv_like.setText("" + like);
+            likecount = like;
+            unlikecount = dislike;
+            tv_unlike.setText("" + dislike);
+            tv_reservation.setText(reservation_grade + "위 " + reservation_rate + "%");
+            ratingBar.setRating(user_rating);
+            tv_score.setText("" + user_rating);
+            tv_audience.setText(audience + "명");
+            tv_synopsis.setText(synopsis);
+            tv_director.setText(director);
+            tv_actor.setText(actor);
+
+            Log.d("test", "main데이터:"+title+", "+grade+", "+date+", "+genre+", "+like+", "+dislike+", "+thumb);
+
+            Glide.with(activity)
+                    .load(thumb)
+                    .into(miv);
+
+            cursor.close();
 
         }
     }

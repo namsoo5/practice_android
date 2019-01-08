@@ -34,7 +34,7 @@ public class Fragment6 extends Fragment {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.ExecuteMain(-1);
+                activity.ExecuteMain();
             }
         });
 

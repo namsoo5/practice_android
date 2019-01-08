@@ -7,7 +7,6 @@ import android.util.Log;
 
 public class DatabaseMovieHelper {
     private static SQLiteDatabase database;
-    private static boolean exist[] = {false, false, false, false, false}; //db없을때 에러방지
     private  static String createTableMovieSql = "create table if not exists movie"+
             "("+
             "    _id integer primary key autoincrement, "+
@@ -58,7 +57,6 @@ public class DatabaseMovieHelper {
             Object[] params = {id, title, reservation_rate, grade, date, image};
             database.execSQL(sql, params);
 
-            exist[id-1] = true;
             println("데이터추가완료");
         }
     }
@@ -66,7 +64,7 @@ public class DatabaseMovieHelper {
     public static Cursor selectMovie(int id){
         println("selectmovie()호출");
 
-        if(database!=null && exist[id-1]){
+        if(database!=null){
             String sql = "select title, reservation_rate, grade, dateValue, image from movie where id="+id;
             Cursor cursor = database.rawQuery(sql, null);
             println("조회데이터수: "+cursor.getCount());

@@ -54,7 +54,8 @@ public class Fragment2 extends Fragment {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.ExecuteMain(1);
+                activity.ExecuteMain();
+                MainActivity.movie_id= 2;
             }
         });
 
@@ -143,6 +144,8 @@ public class Fragment2 extends Fragment {
             Glide.with(activity)
                     .load(image)
                     .into(iv);
+
+            cursor.close();
         }
     }
 

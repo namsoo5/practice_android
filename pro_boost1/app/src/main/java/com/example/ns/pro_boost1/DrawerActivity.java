@@ -17,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.ns.pro_boost1.data.MovieListArray;
 import com.example.ns.pro_boost1.data.MovieListInfo;
 import com.example.ns.pro_boost1.dbHelper.DatabaseMovieHelper;
+import com.example.ns.pro_boost1.dbHelper.DatabaseReadHelper;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -234,41 +236,18 @@ public class DrawerActivity extends AppCompatActivity
         }*/
     }
 
-    public void ExecuteMain(int page){ //프레그먼트에서 상세보기클릭시  실행하는함수
+    public void ExecuteMain(){ //프레그먼트에서 상세보기클릭시  실행하는함수
+
+
+        getSupportActionBar().setTitle("영화 상세");
+        Fragment exfragment =  new MainActivity();
+
+        DatabaseReadHelper.openDatabase(getApplicationContext(), "boost");
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, exfragment).commit();
 
         pager.setVisibility(View.GONE);  //뷰페이지사라짐
         frame.setVisibility(View.VISIBLE);  //상세목록 뜸
-        setTitle("영화 상세");
-        Fragment exfragment =  new MainActivity();
-
-        String movieurl= "http://boostcourse-appapi.connect.or.kr:10000/movie/readMovie?id=";
-        String commenturl = "http://boostcourse-appapi.connect.or.kr:10000/movie/readCommentList?id=";
-        switch (page){
-            case 0:
-               ((MainActivity) exfragment).sendRequest(1,movieurl);
-               ((MainActivity) exfragment).sendCommentRequest(1, commenturl);
-                break;
-            case 1:
-                ((MainActivity) exfragment).sendRequest(2,movieurl);
-                ((MainActivity) exfragment).sendCommentRequest(2, commenturl);
-                break;
-            case 2:
-                ((MainActivity) exfragment).sendRequest(3,movieurl);
-                ((MainActivity) exfragment).sendCommentRequest(3, commenturl);
-                break;
-            case 3:
-                ((MainActivity) exfragment).sendRequest(4,movieurl);
-                ((MainActivity) exfragment).sendCommentRequest(4, commenturl);
-                break;
-            case 4:
-                ((MainActivity) exfragment).sendRequest(5,movieurl);
-                ((MainActivity) exfragment).sendCommentRequest(5, commenturl);
-                break;
-            default:
-                break;
-        }
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, exfragment).commit();
     }
 
     

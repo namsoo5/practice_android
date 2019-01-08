@@ -22,6 +22,7 @@ import com.example.ns.pro_boost1.data.MovieList;
 import com.example.ns.pro_boost1.data.MovieListArray;
 import com.example.ns.pro_boost1.data.MovieListInfo;
 import com.example.ns.pro_boost1.dbHelper.DatabaseMovieHelper;
+import com.example.ns.pro_boost1.dbHelper.DatabaseReadHelper;
 import com.google.gson.Gson;
 
 public class Fragment1 extends Fragment {
@@ -56,7 +57,8 @@ public class Fragment1 extends Fragment {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.ExecuteMain(0);
+                activity.ExecuteMain();
+                MainActivity.movie_id= 1;
             }
         });
 
@@ -67,8 +69,9 @@ public class Fragment1 extends Fragment {
         day = rootView.findViewById(R.id.tv_fragment1_day);
 
 
-        if(DrawerActivity.status == NetworkStatus.TYPE_NOT_CONNECTED)
+        if(DrawerActivity.status == NetworkStatus.TYPE_NOT_CONNECTED) {
             notConnectNetwork(1);  //인터넷연결x시 db에서불러옴
+        }
         else
             sendRequest();
 
@@ -148,6 +151,8 @@ public class Fragment1 extends Fragment {
             Glide.with(activity)
                     .load(image)
                     .into(iv);
+
+            cursor.close();
         }
     }
 
