@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -22,7 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.ns.pro_boost1.data.MovieList;
 import com.example.ns.pro_boost1.data.MovieListArray;
 import com.example.ns.pro_boost1.data.MovieListInfo;
-import com.example.ns.pro_boost1.dbHelper.DatabaseHelper;
+import com.example.ns.pro_boost1.dbHelper.DatabaseMovieHelper;
 import com.google.gson.Gson;
 
 public class Fragment2 extends Fragment {
@@ -37,7 +36,7 @@ public class Fragment2 extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         activity = (DrawerActivity)context;
-        DatabaseHelper.openDatabase(activity, "boost");
+        DatabaseMovieHelper.openDatabase(activity, "boost");
     }
 
     @Override
@@ -66,7 +65,7 @@ public class Fragment2 extends Fragment {
         day = rootView.findViewById(R.id.tv_fragment1_day);
 
         if(DrawerActivity.status == NetworkStatus.TYPE_NOT_CONNECTED)
-            notConnectNetwork(1);  //인터넷연결x시 db에서불러옴
+            notConnectNetwork(2);  //인터넷연결x시 db에서불러옴
         else
             sendRequest();
 
@@ -117,32 +116,34 @@ public class Fragment2 extends Fragment {
                     .load(movielist.image)
                     .into(iv);
 
-            DatabaseHelper.createMovieTable();
-            DatabaseHelper.insertMovie(movielist.id, movielist.title, movielist.reservation_rate,
+            DatabaseMovieHelper.createMovieTable();
+            DatabaseMovieHelper.insertMovie(movielist.id, movielist.title, movielist.reservation_rate,
                     movielist.grade, movielist.date, movielist.image);
 
         }
     }
 
-    public void notConnectNetwork(int id){
-        Cursor cursor = DatabaseHelper.selectMovie(id);
-        cursor.moveToLast();  //최근저장내역가져옴
+    public void notConnectNetwork(int id) {
+        Cursor cursor = DatabaseMovieHelper.selectMovie(id);
+        if (cursor!=null) { // 에러방지
+            cursor.moveToLast();  //최근저장내역가져옴
 
-        String title = cursor.getString(0);
-        float reservation_rate = cursor.getFloat(1);
-        int grade = cursor.getInt(2);
-        String date = cursor.getString(3);
-        String image = cursor.getString(4);
+            String title = cursor.getString(0);
+            float reservation_rate = cursor.getFloat(1);
+            int grade = cursor.getInt(2);
+            String date = cursor.getString(3);
+            String image = cursor.getString(4);
 
 
-        tv_title.setText(""+id+". "+title);
-        reservation.setText("예매율 "+reservation_rate+"%");
-        age.setText(grade+"세 관람가");
-        day.setText(date+"일 개봉");
+            tv_title.setText("" + id + ". " + title);
+            reservation.setText("예매율 " + reservation_rate + "%");
+            age.setText(grade + "세 관람가");
+            day.setText(date + "일 개봉");
 
-        Glide.with(activity)
-                .load(image)
-                .into(iv);
+            Glide.with(activity)
+                    .load(image)
+                    .into(iv);
+        }
     }
 
 

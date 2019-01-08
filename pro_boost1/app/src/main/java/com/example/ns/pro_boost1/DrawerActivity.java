@@ -30,6 +30,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ns.pro_boost1.data.MovieListArray;
 import com.example.ns.pro_boost1.data.MovieListInfo;
+import com.example.ns.pro_boost1.dbHelper.DatabaseMovieHelper;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -57,25 +58,24 @@ public class DrawerActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
-        if(AppHelper.requestQueue == null){
+        if (AppHelper.requestQueue == null) {
             AppHelper.requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE);  //네트워크권한
-        if(permissionCheck == PackageManager.PERMISSION_DENIED){  // 권한거부 되있다면
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_NETWORK_STATE}, 1); //권한허용창
+        if (permissionCheck == PackageManager.PERMISSION_DENIED) {  // 권한거부 되있다면
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_NETWORK_STATE}, 1); //권한허용창
         }
 
         status = NetworkStatus.getConnectivityStatus(getApplicationContext());  //네트워크연결상태
-
-
+        DatabaseMovieHelper.openDatabase(getApplicationContext(), "boost");
 
 
         frame = findViewById(R.id.container); //화면전환을위한
 
         pager = findViewById(R.id.pager);
         pager.setClipToPadding(false);  //자식들의 패딩무시(양쪽미리보기를위한선언)
-        pager.setPadding(150,0,150,0); //양쪽 뷰 미리보기
+        pager.setPadding(150, 0, 150, 0); //양쪽 뷰 미리보기
         pager.setOffscreenPageLimit(3); //뒤에안보이는화면 캐싱
 
         final MoviePagerAdapter adapter = new MoviePagerAdapter(getSupportFragmentManager());
@@ -95,19 +95,18 @@ public class DrawerActivity extends AppCompatActivity
 
         pager.setAdapter(adapter);
 
-        toolbar =  findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("영화 목록");
         setSupportActionBar(toolbar);
 
 
-
-        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView =  findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
