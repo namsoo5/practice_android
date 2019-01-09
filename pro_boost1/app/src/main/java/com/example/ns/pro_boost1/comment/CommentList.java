@@ -16,6 +16,7 @@ public class CommentList {
     public int id;
     public String writer;
     public String writer_image;
+    public int movieId;
     public String time;
     public int timestamp;
     public float rating;

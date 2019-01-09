@@ -32,6 +32,7 @@ import com.example.ns.pro_boost1.comment.CommentListArray;
 import com.example.ns.pro_boost1.data.MovieList;
 import com.example.ns.pro_boost1.data.MovieListArray;
 import com.example.ns.pro_boost1.data.MovieListInfo;
+import com.example.ns.pro_boost1.dbHelper.DatabaseCommentHelper;
 import com.example.ns.pro_boost1.dbHelper.DatabaseReadHelper;
 import com.example.ns.pro_boost1.readmovie.ReadMoveListArray;
 import com.example.ns.pro_boost1.readmovie.ReadMovie;
@@ -104,6 +105,7 @@ public class MainActivity extends Fragment {
         if (context != null)
             activity = context;
 
+        DrawerActivity.status = NetworkStatus.getConnectivityStatus(activity);  //네트워크연결상태
 
 
     }
@@ -215,6 +217,7 @@ public class MainActivity extends Fragment {
 
         if(DrawerActivity.status == NetworkStatus.TYPE_NOT_CONNECTED){
             notConnectReadNetwork(movie_id);
+            notConnectCommentNetwork(movie_id);
         }else{
             sendRequest(movie_id);
             sendCommentRequest(movie_id);
@@ -231,13 +234,12 @@ public class MainActivity extends Fragment {
             case REQ_CODE_EditReviewActivity:
                 if (resultCode == RESULT_OK) {
                     adapter.notifyDataSetChanged();
-                    sendCommentRequest( movie_id);
+
                 }
                 break;
             case REQ_CODE_AllViewActivity:
                 if (resultCode == RESULT_OK) {
                     adapter.notifyDataSetChanged();
-                    sendCommentRequest( movie_id);  //댓글갱신
                    }
                 break;
 
@@ -385,6 +387,18 @@ public class MainActivity extends Fragment {
             adapter = new ListView_review(activity, R.layout.listview_review,commentLists);   //listview review목록
             lv_review.setAdapter(adapter);
 
+            DatabaseCommentHelper.openDatabase(activity, "boost");
+            DatabaseCommentHelper.createCommentTable();
+
+            Thread thread = new Thread(new Runnable() {   //오래걸리는 작업 스레드작업으로
+                @Override
+                public void run() {
+                    DatabaseCommentHelper.insertComment(commentLists);
+                }
+            });
+            thread.start();
+
+
         }
     }
 
@@ -429,7 +443,6 @@ public class MainActivity extends Fragment {
             tv_director.setText(director);
             tv_actor.setText(actor);
 
-            Log.d("test", "main데이터:"+title+", "+grade+", "+date+", "+genre+", "+like+", "+dislike+", "+thumb);
 
             Glide.with(activity)
                     .load(thumb)
@@ -438,6 +451,32 @@ public class MainActivity extends Fragment {
             cursor.close();
 
         }
+    }
+    public void notConnectCommentNetwork(int id) {
+        DatabaseCommentHelper.openDatabase(activity, "boost");
+        Cursor cursor = DatabaseCommentHelper.selectComment(id);
+
+
+        ArrayList<CommentList> dbcommentLists = new ArrayList<CommentList>();
+        CommentList dbcommentList;
+
+        cursor.moveToFirst();
+        while (cursor.moveToNext()) {
+            dbcommentList = new CommentList();
+            dbcommentList.id = cursor.getInt(1);
+            dbcommentList.writer = cursor.getString(2);
+            dbcommentList.time = cursor.getString(3);
+            dbcommentList.rating = cursor.getFloat(4);
+            dbcommentList.contents = cursor.getString(5);
+            dbcommentList.recommend = cursor.getInt(6);
+
+            dbcommentLists.add(dbcommentList); //댓글1개추가
+        }
+        adapter = new ListView_review(activity, R.layout.listview_review, dbcommentLists);   //listview review목록
+        lv_review.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        cursor.close();
     }
 
 }

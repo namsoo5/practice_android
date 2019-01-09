@@ -38,7 +38,7 @@ public class Fragment1 extends Fragment {
         super.onAttach(context);
         activity = (DrawerActivity)context;
         DatabaseMovieHelper.openDatabase(activity, "boost");
-
+        DrawerActivity.status = NetworkStatus.getConnectivityStatus(activity);  //네트워크연결상태
 
     }
 
