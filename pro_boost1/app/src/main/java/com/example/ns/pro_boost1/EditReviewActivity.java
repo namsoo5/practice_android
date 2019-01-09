@@ -1,8 +1,7 @@
 package com.example.ns.pro_boost1;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -59,10 +58,23 @@ public class EditReviewActivity extends AppCompatActivity {
 
                 String writer = "nam";
                 float rating = ratingBar.getRating();
-                sendCommentRequest(movie_id, writer, rating, et.getText().toString());
-
-                setResult(RESULT_OK);
-                finish();
+                if(DrawerActivity.status == NetworkStatus.TYPE_NOT_CONNECTED && !EditReviewActivity.this.isFinishing()) {
+                    AlertDialog.Builder adbuilder = new AlertDialog.Builder(EditReviewActivity.this);
+                    adbuilder.setTitle("통신이 안좋습니다")
+                            .setMessage("인터넷과 연결이 되어있지않습니다.")
+                            .setPositiveButton("종료", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            })
+                            .setCancelable(false)
+                            .show();
+                }else if(DrawerActivity.status != NetworkStatus.TYPE_NOT_CONNECTED) {
+                    sendCommentRequest(movie_id, writer, rating, et.getText().toString());
+                    setResult(RESULT_OK);
+                    finish();
+                }
             }
         });
 
@@ -79,44 +91,29 @@ public class EditReviewActivity extends AppCompatActivity {
 
     public void sendCommentRequest(int id, String writer, float rating, String contents) {
 
-        if(DrawerActivity.status == NetworkStatus.TYPE_NOT_CONNECTED){
-            AlertDialog.Builder adbuilder = new AlertDialog.Builder(getApplicationContext());
-            adbuilder.setTitle("통신이 안좋습니다")
-                    .setMessage("인터넷과 연결이 되어있지않습니다.")
-                    .setPositiveButton("종료", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            setResult(RESULT_CANCELED);
-                            finish();
-                        }
-                    })
-                    .setCancelable(false)
-                    .show();
-        }
-        else {
-            String url = createurl + "id=" + id + "&writer=" + writer + "&rating=" + rating + "&contents=" + contents;
-            StringRequest request = new StringRequest(
-                    Request.Method.GET,
-                    url,
-                    new Response.Listener<String>() {//응답을 문자열로받아서 넣어달라는뜻
-                        @Override
-                        public void onResponse(String response) {
+        String url = createurl + "id=" + id + "&writer=" + writer + "&rating=" + rating + "&contents=" + contents;
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                url,
+                new Response.Listener<String>() {//응답을 문자열로받아서 넣어달라는뜻
+                    @Override
+                    public void onResponse(String response) {
 
-                        }
-                    },
-                    new Response.ErrorListener() {  //에러시실행
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
                     }
-            );
+                },
+                new Response.ErrorListener() {  //에러시실행
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
 
 
-            //자동캐싱기능이있음 이전결과가 그대로보여질수도있다.
-            request.setShouldCache(false); //이전결과가잇더라도 새로요청해서 결과보여줌
-            AppHelper.requestQueue.add(request);
-        }
+        //자동캐싱기능이있음 이전결과가 그대로보여질수도있다.
+        request.setShouldCache(false); //이전결과가잇더라도 새로요청해서 결과보여줌
+        AppHelper.requestQueue.add(request);
+
     }
 
 

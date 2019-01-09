@@ -1,6 +1,7 @@
 package com.example.ns.pro_boost1;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.ns.pro_boost1.comment.CommentInfo;
 import com.example.ns.pro_boost1.comment.CommentList;
 import com.example.ns.pro_boost1.comment.CommentListArray;
+import com.example.ns.pro_boost1.dbHelper.DatabaseCommentHelper;
 import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
@@ -52,19 +54,22 @@ public class AllViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_view);
 
-
+        lv = findViewById(R.id.lv_allview_activity);
         if(AppHelper.requestQueue == null){
             AppHelper.requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
 
         movie_id = getIntent().getIntExtra("id", 0);
-        sendCommentRequest(movie_id, commenturl);
+        if(DrawerActivity.status == NetworkStatus.TYPE_NOT_CONNECTED)
+            notConnectCommentNetwork(movie_id);
+        else
+            sendCommentRequest(movie_id, commenturl);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("한줄평 목록");
-        lv = findViewById(R.id.lv_allview_activity);
+
 
 
         score = findViewById(R.id.tv_allview_score);
@@ -199,6 +204,32 @@ public class AllViewActivity extends AppCompatActivity {
 
         }
 
+    }
 
+    public void notConnectCommentNetwork(int id) {
+        DatabaseCommentHelper.openDatabase(getApplicationContext(), "boost");
+        Cursor cursor = DatabaseCommentHelper.selectComment(id);
+
+
+        ArrayList<CommentList> dbcommentLists = new ArrayList<CommentList>();
+        CommentList dbcommentList;
+
+        cursor.moveToFirst();
+        while (cursor.moveToNext()) {
+            dbcommentList = new CommentList();
+            dbcommentList.id = cursor.getInt(1);
+            dbcommentList.writer = cursor.getString(2);
+            dbcommentList.time = cursor.getString(3);
+            dbcommentList.rating = cursor.getFloat(4);
+            dbcommentList.contents = cursor.getString(5);
+            dbcommentList.recommend = cursor.getInt(6);
+
+            dbcommentLists.add(dbcommentList); //댓글1개추가
+        }
+        adapter = new ListView_review(getApplicationContext(), R.layout.listview_review, dbcommentLists);   //listview review목록
+        lv.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        cursor.close();
     }
 }
