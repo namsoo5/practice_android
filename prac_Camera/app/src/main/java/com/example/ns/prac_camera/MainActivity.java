@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -71,7 +73,12 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == 100 ) {
             if(resultCode == RESULT_OK) {
 
-                iv.setImageURI(uri);    //이미지뷰에 사진넣기
+                //iv.setImageURI(uri);    //이미지뷰에 사진넣기
+
+                Glide.with(getApplicationContext())
+                        .load(uri)
+                        .into(iv);
+
 
                 /* 갤러리에 보이게해주는 코드  */
                 ContentValues values = new ContentValues();
