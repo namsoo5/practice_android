@@ -293,11 +293,28 @@
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="#eeeeee"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#eeeeee"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="갤러리"
+            android:textStyle="bold"
+            android:textSize="17dp"
+            android:textColor="#000000" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:background="#000000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#eeeeee"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

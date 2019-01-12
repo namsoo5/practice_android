@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -91,6 +93,9 @@ public class MainActivity extends Fragment {
 
     String movieurl= "http://boostcourse-appapi.connect.or.kr:10000/movie/readMovie?id=";
     String commenturl = "http://boostcourse-appapi.connect.or.kr:10000/movie/readCommentList?id=";
+
+    RecyclerView recyclerView;
+    ThumbnailAdapter thumbadapter;
 
     @Override
     public void onDetach() {
@@ -223,7 +228,36 @@ public class MainActivity extends Fragment {
             sendCommentRequest(movie_id);
         }
 
+
+        recyclerView = rootView.findViewById(R.id.recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        thumbadapter = new ThumbnailAdapter(activity);
+
+        thumbnail(movie_id);  //영화에따른 섬네일이미지
+        recyclerView.setAdapter(thumbadapter);
+
+
         return rootView;
+    }
+
+    public void thumbnail(int movie_id){
+        switch (movie_id){
+            case 1:
+                thumbadapter.addPhotoItem("https://i.ytimg.com/vi/y422jVFruic/maxresdefault.jpg");
+                thumbadapter.addPhotoItem("http://pub.chosun.com/up_fd/wc_news/2017-11/simg_org/ggun.jpg");
+                thumbadapter.addPhotoItem("http://cphoto.asiae.co.kr/listimglink/1/2017102509384995266_1.jpg");
+                thumbadapter.addPhotoItem("http://www.ccdailynews.com/news/photo/201711/945589_380351_436.jpg");
+                thumbadapter.addMovieItem("https://youtu.be/JNL44p5kzTk");
+                break;
+            case 2:
+                thumbadapter.addPhotoItem("http://img.cgv.co.kr/Movie/Thumbnail/Poster/000080/80085/80085_1000.jpg");
+                thumbadapter.addPhotoItem("http://img.hani.co.kr/imgdb/resize/2017/1115/00503432_20171115.JPG");
+                thumbadapter.addPhotoItem("http://mblogthumb2.phinf.naver.net/20160924_277/turnxing2_14746907429362fDez_JPEG/c0c48a84-f35b-4def-9a48-e94f484b9ee4.png.jpg?type=w800");
+                thumbadapter.addPhotoItem("http://hqwallpapersgalaxy.com/Uploads/18-3-2018/26252/thumb2-2017-gotham-city-justice-leagu-flash-batman.jpg");
+                break;
+        }
     }
 
     @Override
