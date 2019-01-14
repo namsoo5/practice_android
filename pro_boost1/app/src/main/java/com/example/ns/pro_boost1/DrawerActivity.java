@@ -21,7 +21,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -55,6 +60,14 @@ public class DrawerActivity extends AppCompatActivity
     int id=0;
 
     static int status; // 네트워크연결상태확인변수
+    TextView menu;
+    Animation up;
+    Animation down;
+    LinearLayout menulayout;
+    boolean isShow =false;
+    ImageView menu1;
+    ImageView menu2;
+    ImageView menu3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +124,70 @@ public class DrawerActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        menulayout = findViewById(R.id.menuLayout);
+        menu = findViewById(R.id.drawer_titlemenu);
+        up = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.translate_up);
+        down = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.translate_down);
 
+         menu1 = findViewById(R.id.menu1);
+         menu2 = findViewById(R.id.menu2);
+         menu3 = findViewById(R.id.menu3);
+
+         menulayout.bringToFront(); //앞에보이게하기
+        menu1.setOnClickListener(new View.OnClickListener() {   //클릭한 메뉴로 이미지변경
+            @Override
+            public void onClick(View v) {
+                menu.setBackgroundResource(R.drawable.order11);
+                menulayout.startAnimation(up);
+                isShow = !isShow;
+            }
+        });
+        menu2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menu.setBackgroundResource(R.drawable.order22);
+                menulayout.startAnimation(up);
+                isShow = !isShow;
+            }
+        });
+        menu3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menu.setBackgroundResource(R.drawable.order33);
+                menulayout.startAnimation(up);
+                isShow = !isShow;
+            }
+        });
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isShow) {  //보이는상태
+                    menulayout.startAnimation(up);
+                    isShow = !isShow;
+                }else{//안보이는상태
+                    menulayout.setVisibility(View.VISIBLE);
+                    menulayout.startAnimation(down);
+                    isShow = !isShow;
+                }
+            }
+        });
+
+        up.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) { //올라가는애니메이션끝날때 사라지게
+                menulayout.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 
      //임의의 함수만듬  네비게이션바클릭시
@@ -151,15 +227,15 @@ public class DrawerActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-/*
-    @Override
+
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.drawer_optionmenu, menu);
         return true;
     }
-*/
-   /* @Override
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -167,11 +243,11 @@ public class DrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_title) {
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+       return false;
     }
 */
     @SuppressWarnings("StatementWithEmptyBody")
@@ -185,6 +261,7 @@ public class DrawerActivity extends AppCompatActivity
             frame.setVisibility(View.GONE);   //상세목록제거
             pager.setVisibility(View.VISIBLE);  //뷰페이저 뜸
             setTitle("영화 목록");
+            menu.setVisibility(View.VISIBLE);
            // onFragmentSelected(0, null);  //fragment 전환함수실행
         } else if (id == R.id.nav_1) {
             Toast.makeText(this, "영화 API", Toast.LENGTH_SHORT).show();
@@ -240,6 +317,7 @@ public class DrawerActivity extends AppCompatActivity
 
 
         getSupportActionBar().setTitle("영화 상세");
+        menu.setVisibility(View.INVISIBLE);  //정렬안보이게
         Fragment exfragment =  new MainActivity();
 
         DatabaseReadHelper.openDatabase(getApplicationContext(), "boost");
